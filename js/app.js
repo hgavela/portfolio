@@ -1,22 +1,63 @@
-document.addEventListener('DOMContentLoaded', function() {
-    init();
-});
-
-function init() {
-    const dev = document.querySelector('.dev');
-    let text = 'Web developer'
-    let arrayText = text.split('');
-
-    arrayText.forEach(function(letter, index) {
-        setTimeout(function() {
-            dev.innerHTML += letter;
-            consolelog(letter);
-            //let remove = dev.innerText.slice(0, -1);
-            //console.log(dev.innerText);
-            //dev.innerText = remove;
-            //console.log(remove);
-        }, index * 150);
-    });
-    console.log('out')
+$(document).ready(function(){
+    /*         <----------- Variables ----------------->               */
+    var texts , back , index , x, count , p, time , div             ;
+    texts = [" Web Developer      "];
+    back = false;
+    index = 0;
+    count = 0;
+    time = 150;
+    p = $('h2.write');
+    div = $('div');
+    /*         <----------- Variables ----------------->               */
+  
+    function write(){
+      x = setInterval(function(){
+        /*      <-   False      ->        */
+        if( back ==false )
+        {
+          time=80;
+  
+          p.text( p.text() + texts[index][count] );
+          count++;
+          if( count == texts[index].length )
+          {
+            clearInterval(x);
+            back = true;
+            if( index==texts.length  -1 )
+            {
+              index = 0
+            }
+            else
+            {
+              index++
+            }		                 
+            write();
+          };
+  
+        }
+        /*      <-   False      ->        */
+        /*      <-   [  True ]      ->        */
+        else
+        {
+          time=150
+  
+          count--;
+          p.text(    p.text().slice(0,count)        )
+  
+  
+          if (count == 0 ) {
+            clearInterval(x);
+            back = false;
+            write();
+          }
+  
+        }
+        /*      <-   [  True ]      ->        */
+      },time);
+  
+    };
+    write();
+    /*    <!--------------   Middle   -------------->          */
     
-}
+  });
+  /*     <!-------------   End   --------------->         */
